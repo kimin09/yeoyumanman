@@ -307,7 +307,7 @@ var lines = {};
     },
   });
   {% if route %} // 경로가 있을때
-      var nodes = {{route|tojson}}; // station이 경로에 역과 호선이 된다.
+      var nodes = {{route|tojson}}; // station이 경로에 있는 역과 호선이 된다.
       
       nodes = nodes.map(function (station) { // station이 경로에 역과 호선이 됩니다.
         // allstation은 키값이 uid이고 uid의 키값은 oName과 lineId 등이고 oName의 value는 역이름이고 lindId의 value는 호선이름이고 station은 (역, 호선)이런 형태입니다. 그래서 find함수로 역, 호선을 비교해서 true가 나오면 그 uid를 nodes로 저장하는 코드입니다.
