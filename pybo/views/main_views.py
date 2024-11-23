@@ -1,5 +1,4 @@
 from flask import Blueprint, url_for
-# from werkzeug.utils import redirect
 from pybo.forms import RouteForm
 from flask import Blueprint, render_template, request, url_for
 from pybo.find_route import find_route
