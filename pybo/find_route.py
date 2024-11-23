@@ -53,17 +53,19 @@ for row in list(reader):
         else:
             congestion[station][ud][t] = 32
 
-def add_line_to_graph(graphs, name, line, time):
-    graph = {}
-    t1 = 91
-    t2 = 91
-    congestion1 = 32
-    congestion2 = 32
+def add_line_to_graph(graphs, name, line, time): # 그래프, 호선이름, 호선의 역들, 혼잡도 시간대를 받습니다.
+    graph = {} # 추가하거나 수정할 딕셔너리
+    # 평균 소요시간: 91 (소요시간 데이터가 없을 시 평균 값)
+    t1 = 91 # 이전 역 소요시간
+    t2 = 91 # 다음 역 소요시간
+    # 평균 혼잡도: 32 (혼잡도 데이터가 없을 시 평균 값)
+    congestion1 = 32 # 이전 역 혼잡도
+    congestion2 = 32 # 다음 역 혼잡도
 
-    if time in graphs:
+    if time in graphs: # 시간대가 있으면 graph에 graphs의 혼잡도 시간대의 역들 정보를 받아서 graph가 수정되면 graphs도 수정되는 코드입니다.
         graph = graphs[time]
     
-    else:
+    else: # 시간대가 없으면 새 딕셔너리를 넣어서 graph에 정보가 추가되면 graphs도 정보가 추가하는 코드입니다.
         graphs[time] = graph
 
     for station in line:
@@ -71,6 +73,7 @@ def add_line_to_graph(graphs, name, line, time):
             graph[station] = []
 
     for i in range(len(line)):
+        # 생략된 코드는 소요시간과 혼잡도 데이터가 있을 때 그 데이터로 바꿔주는 코드입니다.
         if name in spent_time:
             if line[i] in spent_time[name]:
                 t1 = spent_time[name][line[i]]
@@ -87,10 +90,10 @@ def add_line_to_graph(graphs, name, line, time):
             if '하선' in congestion[line[i]]:
                 congestion2 = congestion[line[i]]['하선'][time]
         
-        if i > 0:
+        if i > 0: # 이전 역, 소요시간, 혼잡도, 호선이름을 추가하는 코드입니다.
             graph[line[i]].append([line[i-1], t1, congestion1, name])
         
-        if i < len(line) - 1:
+        if i < len(line) - 1: # 다음 역, 소요시간, 혼잡도, 호선이름을 추가하는 코드입니다.
             graph[line[i]].append([line[i+1], t2, congestion2, name])
 
 # 그래프 초기화
@@ -147,24 +150,25 @@ for t in times:
 def expression(t, c):
     return t + (t + c)
 
-def dijkstra(start, time):
-    queue = PriorityQueue()
-    queue.put((0, start))
-    weight[start] = 0
+def dijkstra(start, time): # start는 출발역이고 time은 시간대를 받고 그래프에서 시간대에 있는 역들의 정보를 주기 위해 넣습니다.
+    queue = PriorityQueue() # 우선순위 큐는 가중치가 작을수록 우선순위가 높아 먼저 처리를 하기 때문에 썼습니다.
+    weight[start] = 0 # 출발역이라 가중치 0으로 설정합니다.
+    queue.put((weight[start], start)) # 출발역과 가중치를 넣는 코드입니다.
+    
 
-    while not queue.empty():
+    while not queue.empty(): # queue가 비어있을 때 까지 반복
 
-        weight_value, station = queue.get()
+        weight_value, station = queue.get() # 가중치와 역 정보
 
-        if weight_value > weight[station]:
+        if weight_value > weight[station]: # 이미 탐색을 완료했을 때
             continue
 
-        for i, t, congestion, n in graph[time][station]:
-            w = expression(t, congestion)
-            if weight[i] > weight[station] + w:
-                weight[i] = weight[station] + w
-                previous[i] = (station, n)
-                queue.put((weight[i], i))
+        for i, t, congestion, n in graph[time][station]: # 한 역과 연결되어있는 역, 그 역의 소요시간, 그 역의 혼잡도, 역과 그 역이 연결되어있는 호선이름입니다.
+            w = expression(t, congestion) # A* 알고리즘을 적용 (가중치 구하는 식)
+            if weight[i] > weight[station] + w: # 역들의 가중치를 비교
+                weight[i] = weight[station] + w # 가중치가 더 작으면 더 작은 가중치를 저장합니다.
+                previous[i] = (station, n) # 경로를 알아내기 위해 이전 역과 호선을 저장합니다.
+                queue.put((weight[i], i)) # 가중치와 역을 큐에 넣습니다.
 
 def find_route(start_station, end_station, time):
     for i in graph[time].keys():
