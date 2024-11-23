@@ -1,3 +1,4 @@
+<!-- templates/map.html -->
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -307,9 +308,6 @@ var lines = {};
   {% if route %}
       var nodes = {{route|tojson}};
       
-      // nodes
-      // allStations에 {uid, 호선이름, 역이름}
-      // 
       nodes = nodes.map(function (station) {
         const uid = Object.keys(allStations).find(
           function(uid) {
@@ -320,7 +318,7 @@ var lines = {};
 
         return uid;
       });
-      // 지하철역이 여기서는 uid로 표현이 됨. 그래서 uid 목록을가져와야함
+
       $.fn.subwayMap('showRoute', nodes);
       
   {% endif %}
