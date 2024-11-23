@@ -1,0 +1,24 @@
+
+html, body, #app {
+    height: 100vh;
+    margin: 0;
+  }
+  .mapImage {
+    transform-origin: top left;
+    transition: transform 0.3s;
+  }
+  .map-wrap {
+    height: 100%;
+    width: calc(100% - 360px);
+  }
+  .subway-map {
+    width: 100%;
+    height: 100%;
+  }
+  #app {
+    display: flex;
+    flex-direction: row;
+  }
+  .left {
+    min-width: 360px;
+  }
