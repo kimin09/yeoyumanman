@@ -45,6 +45,7 @@
     }
   </style>
   <body>
+    <!-- 출발역과 도착역 데이터를 받아 서버에 post형식으로 보내주고 경로를 받아 화면에 출력하는 코드입니다. -->
     <div id="app">
       <div class="left">
         <form method="post">
@@ -305,10 +306,11 @@ var lines = {};
       return false;
     },
   });
-  {% if route %}
-      var nodes = {{route|tojson}};
+  {% if route %} // 경로가 있을때
+      var nodes = {{route|tojson}}; // station이 경로에 역과 호선이 된다.
       
-      nodes = nodes.map(function (station) {
+      nodes = nodes.map(function (station) { // station이 경로에 역과 호선이 됩니다.
+        // allstation은 키값이 uid이고 uid의 키값은 oName과 lineId 등이고 oName의 value는 역이름이고 lindId의 value는 호선이름이고 station은 (역, 호선)이런 형태입니다. 그래서 find함수로 역, 호선을 비교해서 true가 나오면 그 uid를 nodes로 저장하는 코드입니다.
         const uid = Object.keys(allStations).find(
           function(uid) {
             return allStations[uid].oName == station[0] &&
@@ -319,7 +321,7 @@ var lines = {};
         return uid;
       });
 
-      $.fn.subwayMap('showRoute', nodes);
+      $.fn.subwayMap('showRoute', nodes); // 노드에 저장된 정보를 기반으로 showRoute함수를 사용해서 화면에 경로를 보여줍니다.
       
   {% endif %}
 })();
