@@ -60,6 +60,6 @@ def map():
     form = RouteForm() # Routeform으로 입력을 받습니다.
     time = now_time(now.hour, now.minute) # 현재시간
     if request.method == 'POST' and form.validate_on_submit(): # post요청인지 확인하고 유효성 검사하는 코드입니다.
-        route = find_route(form.start.data, form.end.data, time) # post요청일 때 입력받은 데이터로 경로 구하는 코드입니다.
-        return render_template('map.html', route=route, form=form) # 경로 데이터 와 요청받은 데이터를 전달하여 map.html을 보여주는 코드입니다.
+        route = find_route(form.start.data, form.end.data, time) # post요청일 때 입력받은 데이터로 경로를 구하는 코드입니다.
+        return render_template('map.html', route=route, form=form) # 경로 데이터와 요청받은 데이터를 전달하여 map.html을 보여주는 코드입니다.
     return render_template('map.html', form=form) # 입력을 받지 않았을 때 초기 화면을 보여주는 코드입니다.

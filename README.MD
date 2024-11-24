@@ -1,2 +1,2 @@
-사이트 주소: http://ec2-43-203-179-223.ap-northeast-2.compute.amazonaws.com:5000/
-사용법1: 터미널 열기 -> cd yeoyumanman -> pip install -r requirements.txt -> myproejct.cmd -> flask run -> 주소 들어가기
+웹 사이트 배포용 주소: http://ec2-43-203-179-223.ap-northeast-2.compute.amazonaws.com:5000/ (서버를 열어야 접속할 수 있습니다)
+사용법: 터미널 열기 -> cd yeoyumanman -> pip install -r requirements.txt -> myproejct.cmd -> flask run -> http://127.0.0.1:5000 주소로 들어가기
